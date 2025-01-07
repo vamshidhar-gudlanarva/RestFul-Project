@@ -1,5 +1,6 @@
 package org.example.spring6restmvc.model;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.beans.BeanInfo;
@@ -7,7 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-
+@Builder
 @Data
 public class Beer {
 
