@@ -45,7 +45,7 @@ public class CustomerController {
     }
 
      @RequestMapping(method = RequestMethod.GET)
-     public List<Customer> getCustomers() {
+     public List<Customer> listAllCustomers() {
          return customerService.getCustomers();
      }
 

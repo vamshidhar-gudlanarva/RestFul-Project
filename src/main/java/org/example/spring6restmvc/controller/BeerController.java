@@ -1,6 +1,7 @@
 package org.example.spring6restmvc.controller;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.spring6restmvc.model.Beer;
 import org.example.spring6restmvc.services.BeerService;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/beer")
 public class BeerController {
