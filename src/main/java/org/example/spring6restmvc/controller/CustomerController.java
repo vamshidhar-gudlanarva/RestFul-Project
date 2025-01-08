@@ -1,8 +1,7 @@
 package org.example.spring6restmvc.controller;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.example.spring6restmvc.model.Customer;
+import org.example.spring6restmvc.model.CustomerDTO;
 import org.example.spring6restmvc.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -25,9 +24,9 @@ public class CustomerController {
 
     @PatchMapping(CUSTOMER_PATH_ID)
     public ResponseEntity patchCustomerById(@PathVariable("customerId") UUID customerId,
-                                            @RequestBody Customer customer){
+                                            @RequestBody CustomerDTO customerDTO){
 
-        customerService.patchCustomerById(customerId, customer);
+        customerService.patchCustomerById(customerId, customerDTO);
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
@@ -41,26 +40,26 @@ public class CustomerController {
     }
 
     @PutMapping(CUSTOMER_PATH_ID)
-    public ResponseEntity updateCustomerById(@PathVariable("customerId") UUID customerId, @RequestBody Customer customer) {
-        customerService.updateCustomerById(customerId, customer);
+    public ResponseEntity updateCustomerById(@PathVariable("customerId") UUID customerId, @RequestBody CustomerDTO customerDTO) {
+        customerService.updateCustomerById(customerId, customerDTO);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
      @GetMapping(CUSTOMER_PATH)
-     public List<Customer> listAllCustomers() {
+     public List<CustomerDTO> listAllCustomers() {
          return customerService.getCustomers();
      }
 
      @GetMapping(value = CUSTOMER_PATH_ID)
-     public Customer getCustomerById(@PathVariable("customerId") UUID id) {
+     public CustomerDTO getCustomerById(@PathVariable("customerId") UUID id) {
          return customerService.getCustomerById(id);
      }
 
      @PostMapping(CUSTOMER_PATH)
-     public ResponseEntity handleCustomer(@RequestBody Customer customer) {
-         Customer savedCustomer = customerService.saveNewCustomer(customer);
+     public ResponseEntity handleCustomer(@RequestBody CustomerDTO customerDTO) {
+         CustomerDTO savedCustomerDTO = customerService.saveNewCustomer(customerDTO);
          HttpHeaders responseHeaders = new HttpHeaders();
-         responseHeaders.add("Location", CUSTOMER_PATH + "/" + savedCustomer.getId());
+         responseHeaders.add("Location", CUSTOMER_PATH + "/" + savedCustomerDTO.getId());
          return new ResponseEntity(responseHeaders, HttpStatus.CREATED);
      }
 

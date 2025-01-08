@@ -1,20 +1,20 @@
 package org.example.spring6restmvc.services;
 
-import org.example.spring6restmvc.model.Customer;
+import org.example.spring6restmvc.model.CustomerDTO;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface CustomerService {
 
-    Customer getCustomerById(UUID id);
-    List<Customer> getCustomers();
+    CustomerDTO getCustomerById(UUID id);
+    List<CustomerDTO> getCustomers();
 
-    Customer saveNewCustomer(Customer customer);
+    CustomerDTO saveNewCustomer(CustomerDTO customerDTO);
 
-    void updateCustomerById(UUID customerId, Customer customer);
+    void updateCustomerById(UUID customerId, CustomerDTO customerDTO);
 
     void deleteById(UUID customerId);
 
-    void patchCustomerById(UUID customerId, Customer customer);
+    void patchCustomerById(UUID customerId, CustomerDTO customerDTO);
 }
