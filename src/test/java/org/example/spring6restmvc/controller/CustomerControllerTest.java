@@ -37,13 +37,26 @@ public class CustomerControllerTest {
     CustomerService customerService;
     CustomerServiceImpl customerServiceImpl;
 
-    
+    @Test
+    void testDeleteCustomer() throws Exception {
+        CustomerDTO customer = customerServiceImpl.getCustomers().get(0);
+
+        given(customerService.deleteById(any())).willReturn(true);
+
+        mockMvc.perform(delete(CustomerController.CUSTOMER_PATH_ID, customer.getId())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
+        ArgumentCaptor<UUID> uuidArgumentCaptor = ArgumentCaptor.forClass(UUID.class);
+        verify(customerService).deleteById(uuidArgumentCaptor.capture());
+        assertThat(customer.getId()).isEqualTo(uuidArgumentCaptor.getValue());
+    }
 
     @Test
     void testUpdateCustomer() throws Exception {
 
         CustomerDTO customerDTO = customerServiceImpl.getCustomers().get(0);
 
+        given(customerService.updateCustomerById(any(),any())).willReturn(Optional.of(CustomerDTO.builder().build()));
         mockMvc.perform(put(CustomerController.CUSTOMER_PATH+ "/" + customerDTO.getId())
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -91,7 +104,7 @@ public class CustomerControllerTest {
     @Test
     void getCustomerByIdNotFound() throws Exception {
 
-        given(customerService.getCustomerById(any(UUID.class))).willThrow(NotFoundException.class);
+        given(customerService.getCustomerById(any(UUID.class))).willReturn(Optional.empty());
 
         mockMvc.perform(get(CustomerController.CUSTOMER_PATH_ID, UUID.randomUUID()))
                 .andExpect(status().isNotFound());
