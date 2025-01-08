@@ -15,13 +15,15 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("api/v1/customer")
 public class CustomerController {
+
+    public static final String CUSTOMER_PATH = "/api/v1/customer";
+    public static final String CUSTOMER_PATH_ID = CUSTOMER_PATH + "/{customerId}";
 
     @Autowired
      private CustomerService customerService;
 
-    @PatchMapping("{customerId}")
+    @PatchMapping(CUSTOMER_PATH_ID)
     public ResponseEntity patchCustomerById(@PathVariable("customerId") UUID customerId,
                                             @RequestBody Customer customer){
 
@@ -30,7 +32,7 @@ public class CustomerController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping("{customerId}")
+    @DeleteMapping(CUSTOMER_PATH_ID)
     public ResponseEntity deleteCustomerById(@PathVariable("customerId") UUID customerId){
 
     customerService.deleteById(customerId);
@@ -38,27 +40,27 @@ public class CustomerController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping("{customerId}")
-    public ResponseEntity updateCustomerById(@PathVariable UUID customerId, @RequestBody Customer customer) {
+    @PutMapping(CUSTOMER_PATH_ID)
+    public ResponseEntity updateCustomerById(@PathVariable("customerId") UUID customerId, @RequestBody Customer customer) {
         customerService.updateCustomerById(customerId, customer);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
-     @RequestMapping(method = RequestMethod.GET)
+     @GetMapping(CUSTOMER_PATH)
      public List<Customer> listAllCustomers() {
          return customerService.getCustomers();
      }
 
-     @RequestMapping(value = "{customerId}", method = RequestMethod.GET)
+     @GetMapping(value = CUSTOMER_PATH_ID)
      public Customer getCustomerById(@PathVariable("customerId") UUID id) {
          return customerService.getCustomerById(id);
      }
 
-     @PostMapping
+     @PostMapping(CUSTOMER_PATH)
      public ResponseEntity handleCustomer(@RequestBody Customer customer) {
          Customer savedCustomer = customerService.saveNewCustomer(customer);
          HttpHeaders responseHeaders = new HttpHeaders();
-         responseHeaders.add("Location", "/api/v1/customer/" + savedCustomer.getId());
+         responseHeaders.add("Location", CUSTOMER_PATH + "/" + savedCustomer.getId());
          return new ResponseEntity(responseHeaders, HttpStatus.CREATED);
      }
 
