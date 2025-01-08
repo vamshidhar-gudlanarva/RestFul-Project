@@ -52,7 +52,7 @@ public class CustomerController {
 
      @GetMapping(value = CUSTOMER_PATH_ID)
      public CustomerDTO getCustomerById(@PathVariable("customerId") UUID id) {
-         return customerService.getCustomerById(id);
+         return customerService.getCustomerById(id).orElseThrow(NotFoundException::new);
      }
 
      @PostMapping(CUSTOMER_PATH)

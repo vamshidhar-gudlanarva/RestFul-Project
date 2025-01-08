@@ -21,6 +21,7 @@ import static org.hamcrest.core.Is.is;
 import static org.mockito.BDDMockito.given;
 import org.mockito.ArgumentCaptor;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @WebMvcTest(CustomerController.class)
@@ -101,7 +102,7 @@ public class CustomerControllerTest {
     void getCustomerById() throws Exception {
 
         CustomerDTO testcustomer = customerServiceImpl.getCustomers().get(0);
-        given(customerService.getCustomerById(testcustomer.getId())).willReturn(testcustomer);
+        given(customerService.getCustomerById(testcustomer.getId())).willReturn(Optional.of(testcustomer));
 
 
         mockMvc.perform(get(CustomerController.CUSTOMER_PATH_ID,  testcustomer.getId())
