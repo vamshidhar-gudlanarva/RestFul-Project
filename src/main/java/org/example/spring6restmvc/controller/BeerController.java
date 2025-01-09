@@ -18,6 +18,7 @@ import java.util.UUID;
 @RestController
 public class BeerController {
 
+
     public static final String BEER_PATH = "/api/v1/beer";
     public static final String BEER_PATH_ID = BEER_PATH + "/{beerId}";
     private final BeerService beerService;
@@ -64,7 +65,6 @@ public class BeerController {
      {
          return beerService.listBeers();
      }
-
 
 
      @GetMapping(value = BEER_PATH_ID)
